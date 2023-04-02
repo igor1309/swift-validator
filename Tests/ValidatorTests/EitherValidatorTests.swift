@@ -14,7 +14,7 @@ final class EitherValidatorTests: XCTestCase {
         
         let first = Validators.MinLengthValidator(minLength: 4)
         let second = Validators.MinLengthValidator(minLength: 6)
-        let either = EitherValidator(first: first, second: second)
+        let either = Validators.Either(first: first, second: second)
         let either2 = first.either(second)
 
         XCTAssertEqual(first.validate("aaa"), .failure(.tooShort))
@@ -27,7 +27,7 @@ final class EitherValidatorTests: XCTestCase {
         
         let first = Validators.MinLengthValidator(minLength: 4)
         let second = Validators.MinLengthValidator(minLength: 6)
-        let either = EitherValidator(first: first, second: second)
+        let either = Validators.Either(first: first, second: second)
         let either2 = first.either(second)
 
         XCTAssertEqual(first.validate("aaaa"), .valid(.init()))
@@ -40,7 +40,7 @@ final class EitherValidatorTests: XCTestCase {
         
         let first = Validators.MinLengthValidator(minLength: 4)
         let second = Validators.MinLengthValidator(minLength: 6)
-        let either = EitherValidator(first: first, second: second)
+        let either = Validators.Either(first: first, second: second)
         let either2 = first.either(second)
 
         XCTAssertEqual(first.validate("aaa"), .failure(.tooShort))
@@ -53,7 +53,7 @@ final class EitherValidatorTests: XCTestCase {
         
         let first = Validators.MinLengthValidator(minLength: 4)
         let second = Validators.MinLengthValidator(minLength: 6)
-        let either = EitherValidator(first: first, second: second)
+        let either = Validators.Either(first: first, second: second)
         let either2 = first.either(second)
 
         XCTAssertEqual(first.validate("aaaa"), .valid(.init()))

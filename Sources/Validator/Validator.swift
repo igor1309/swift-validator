@@ -32,14 +32,3 @@ public protocol Validator {
     func validate(_ input: Input) -> ValidatorResult<OK, Failure>
 }
 #endif
-
-public struct OK: Equatable {
-    public init() {}
-}
-
-public enum ValidatorResult<Success, Failure> {
-    case valid(Success)
-    case failure(Failure)
-}
-
-extension ValidatorResult: Equatable where Success: Equatable, Failure: Equatable {}

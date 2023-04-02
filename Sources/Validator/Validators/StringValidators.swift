@@ -66,11 +66,11 @@ extension Validators {
     
     public struct MinMaxLengthValidator: Validator {
         
-        private let chainedValidator: ChainValidator<MinLengthValidator, MaxLengthValidator>
+        private let chainedValidator: Validators.Chained<MinLengthValidator, MaxLengthValidator>
         
         public init(minLength: Int, maxLength: Int) {
             
-            self.chainedValidator = ChainValidator(
+            self.chainedValidator = Validators.Chained(
                 first: MinLengthValidator(minLength: minLength),
                 second: MaxLengthValidator(maxLength: maxLength)
             )
