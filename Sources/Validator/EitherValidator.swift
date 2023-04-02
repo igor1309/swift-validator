@@ -7,7 +7,9 @@
 
 extension Validator {
     
-    public func either<V: Validator>(_ validator: V) -> EitherValidator<Self, V> {
+    public func either<V: Validator>(
+        _ validator: V
+    ) -> EitherValidator<Self, V> {
         
         .init(first: self, second: validator)
     }
@@ -26,7 +28,9 @@ where First: Validator,
         self.second = second
     }
     
-    public func validate(_ input: (First.Input, Second.Input)) -> ValidatorResult<OK, First.Failure> {
+    public func validate(
+        _ input: (First.Input, Second.Input)
+    ) -> ValidatorResult<OK, First.Failure> {
         
         switch first.validate(input.0) {
         case .valid:

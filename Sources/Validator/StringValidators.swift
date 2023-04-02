@@ -40,7 +40,10 @@ extension Validators {
             self.minLength = minLength
         }
         
-        public func validate(_ input: String) -> ValidatorResult<OK, ValidationError> {
+        public func validate(
+            _ input: String
+        ) -> ValidatorResult<OK, ValidationError> {
+            
             input.count >= minLength ? .valid(.init()) : .failure(.tooShort)
         }
     }
@@ -53,7 +56,10 @@ extension Validators {
             self.maxLength = maxLength
         }
         
-        public func validate(_ input: String) -> ValidatorResult<OK, ValidationError> {
+        public func validate(
+            _ input: String
+        ) -> ValidatorResult<OK, ValidationError> {
+            
             input.count <= maxLength ? .valid(.init()) : .failure(.tooLong)
         }
     }
@@ -63,13 +69,17 @@ extension Validators {
         private let chainedValidator: ChainValidator<MinLengthValidator, MaxLengthValidator>
         
         public init(minLength: Int, maxLength: Int) {
+            
             self.chainedValidator = ChainValidator(
                 first: MinLengthValidator(minLength: minLength),
                 second: MaxLengthValidator(maxLength: maxLength)
             )
         }
         
-        public func validate(_ input: String) -> ValidatorResult<OK, ValidationError> {
+        public func validate(
+            _ input: String
+        ) -> ValidatorResult<OK, ValidationError> {
+            
             chainedValidator.validate(input)
         }
     }
@@ -78,25 +88,28 @@ extension Validators {
         
         private let start: UInt
         private let expected: String
-
+        
         public init(start: UInt, expected: String) {
             self.start = start
             self.expected = expected
         }
         
-        public func validate(_ input: String) -> ValidatorResult<OK, ValidationError> {
-
+        public func validate(
+            _ input: String
+        ) -> ValidatorResult<OK, ValidationError> {
+            
             let result: Bool = {
-            let minimumLength = Int(start) + expected.count
-            guard input.count >= minimumLength else {
-                return false
-            }
-            
-            let rangeStart = String.Index(utf16Offset: Int(start), in: input)
-            let rangeEnd = String.Index(utf16Offset: minimumLength, in: input)
-            let characterInRange = input[rangeStart..<rangeEnd]
-            
-            return characterInRange == expected
+                let minimumLength = Int(start) + expected.count
+                
+                guard input.count >= minimumLength else {
+                    return false
+                }
+                
+                let rangeStart = String.Index(utf16Offset: Int(start), in: input)
+                let rangeEnd = String.Index(utf16Offset: minimumLength, in: input)
+                let characterInRange = input[rangeStart..<rangeEnd]
+                
+                return characterInRange == expected
             }()
             
             
@@ -116,7 +129,9 @@ extension Validators {
             self.regEx = regEx
         }
         
-        public func validate(_ input: String) -> ValidatorResult<OK, ValidationError> {
+        public func validate(
+            _ input: String
+        ) -> ValidatorResult<OK, ValidationError> {
             
             let predicate = NSPredicate(format:"SELF MATCHES %@", regEx)
             if predicate.evaluate(with: input) {

@@ -29,7 +29,9 @@ where First: Validator,
         self.second = second
     }
     
-    public func validate(_ input: First.Input) -> ValidatorResult<OK, First.Failure> {
+    public func validate(
+        _ input: First.Input
+    ) -> ValidatorResult<OK, First.Failure> {
         
         switch first.validate(input) {
         case .valid:
